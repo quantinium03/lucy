@@ -19,10 +19,5 @@ func main() {
 
 	route.SetupRoutes(app)
 
-	app.Use(func(c *fiber.Ctx) error {
-		return c.SendFile("./public/404.html")
-	})
-
-
 	log.Fatal(app.Listen(":" + config.Config("PORT")))
 }

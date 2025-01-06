@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/quantinium03/lucy/internal/database"
 	"github.com/quantinium03/lucy/internal/database/model"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CreateUser(c *fiber.Ctx) error {
@@ -20,6 +21,18 @@ func CreateUser(c *fiber.Ctx) error {
 		})
 	}
 
+	// hash the password for storing the database
+	hash, err := bcrypt.GenerateFromPassword([]byte(user.Password), 10)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"status":  "error",
+			"message": "Could not create user. failed to generate password hash",
+			"data":    err,
+		})
+	}
+	user.Password = string(hash[:])
+
+	// create the user
 	err = db.Create(&user).Error
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
@@ -33,27 +46,6 @@ func CreateUser(c *fiber.Ctx) error {
 		"status":  "success",
 		"message": "user created successfully",
 		"data":    user,
-	})
-}
-
-func GetAllUsers(c *fiber.Ctx) error {
-	db := database.DB.DB
-	var users []model.User
-
-	db.Find(&users)
-
-	if len(users) == 0 {
-		return c.Status(404).JSON(fiber.Map{
-			"status":  "error",
-			"message": "Users not found",
-			"data":    nil,
-		})
-	}
-
-	return c.Status(200).JSON(fiber.Map{
-		"status":  "success",
-		"message": "Users found",
-		"data":    users,
 	})
 }
 
@@ -79,45 +71,6 @@ func GetSingleUser(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateUser(c *fiber.Ctx) error {
-	type updateUser struct {
-		Username string `json:"username"`
-	}
-
-	db := database.DB.DB
-	id := c.Params("id")
-
-	var user model.User
-
-	db.Find(&user, "id = ?", id)
-	if user.ID == uuid.Nil {
-		return c.Status(404).JSON(fiber.Map{
-			"status":  "error",
-			"message": "user not found",
-			"data":    nil,
-		})
-	}
-
-	var UpdateUserData updateUser
-	err := c.BodyParser(&UpdateUserData)
-	if err != nil {
-		return c.Status(400).JSON(fiber.Map{
-			"status":  "error",
-			"message": "Bad request. Body is wrong",
-			"data":    err,
-		})
-	}
-
-	user.Username = UpdateUserData.Username
-	db.Save(&user)
-
-	return c.Status(200).JSON(fiber.Map{
-		"status":  "success",
-		"message": "user data updated successfully",
-		"data":    user,
-	})
-}
-
 func DeleteUser(c *fiber.Ctx) error {
 	db := database.DB.DB
 	id := c.Params("id")
@@ -133,12 +86,12 @@ func DeleteUser(c *fiber.Ctx) error {
 		})
 	}
 
-	err := db.Delete(&user, "id = ?", id)
-	if err != nil {
+	res := db.Where("id = ?", id).Delete(&user)
+	if res.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"status":  "error",
-			"message": "Failed to delete user",
-			"data":    nil,
+			"status": "error",
+			"message": "failed to delete user",
+			"data" : res.Error,
 		})
 	}
 
