@@ -1,0 +1,39 @@
+services:
+  lucy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: "postgres"
+      DB_PORT: '5432'
+      DB_USER: '${DB_USER}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      DB_NAME: '${DB_NAME}'
+      PORT: '${PORT}'
+    depends_on:
+      - postgres
+    networks:
+      - alice
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: quantinium
+      POSTGRES_DB: postgres
+    volumes:
+      - lucy_db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - alice
+
+volumes:
+  lucy_db: {}
+
+networks:
+  alice: {}
