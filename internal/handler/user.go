@@ -32,6 +32,13 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 	user.Password = string(hash[:])
 
+	if user.Username != "quantinium" {
+		return c.Status(401).JSON(fiber.Map{
+			"status":  "error",
+			"message": "WHY ARE YOU HERE???. WHO ARE YOU???. GO AWAY!!! SHOO SHOO",
+		})
+	}
+
 	// create the user
 	err = db.Create(&user).Error
 	if err != nil {
@@ -89,9 +96,9 @@ func DeleteUser(c *fiber.Ctx) error {
 	res := db.Where("id = ?", id).Delete(&user)
 	if res.Error != nil {
 		return c.Status(500).JSON(fiber.Map{
-			"status": "error",
+			"status":  "error",
 			"message": "failed to delete user",
-			"data" : res.Error,
+			"data":    res.Error,
 		})
 	}
 

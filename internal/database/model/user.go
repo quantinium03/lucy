@@ -7,9 +7,9 @@ import (
 
 type User struct {
 	gorm.Model
-	ID       uuid.UUID `gorm:"type:uuid;primaryKey"`
+	ID       uuid.UUID `gorm:"type:uuid"`
 	Username string    `gorm:"unique;not null" json:"username"`
-	Email    string    `gorm:"not null" json:"email"`
+	Email    string    `gorm:"unique;not null" json:"email"`
 	Password string    `gorm:"not null" json:"password"`
 }
 

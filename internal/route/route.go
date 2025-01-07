@@ -13,6 +13,11 @@ func SetupRoutes(app *fiber.App) {
 	v1.Post("/user", handler.CreateUser)
 	v1.Delete("/user/:id", handler.DeleteUser)
 
-	v1.Post("/keyboard/:id", handler.UpdateKeyboardStats)
+	v1.Post("/keyboard/:id", handler.CreateKeyboardStats)
 	v1.Get("/keyboard/:id", handler.GetKeyboardStats)
+	v1.Put("/keyboard/:id", handler.UpdateKeyboardStats)
+
+	v1.Post("/mouse/:id", handler.CreateMouseStats)
+	v1.Get("/mouse/:id", handler.GetMouseStats)
+	v1.Put("/mouse/:id", handler.UpdateMouseStats)
 }
