@@ -7,9 +7,14 @@ import (
 
 type Mouse struct {
 	gorm.Model
-	ID uuid.UUID `gorm:"type:uuid"`
-	Username string `gorm:"unique;not null;primaryKey" json:"username"`
-	LeftClick uint64 `json:"leftClick"`	
-	RightClick uint64 `json:"rightClick"`
-	MouseTravel uint64 `json:"mouseTravel"`
+	ID          uuid.UUID `gorm:"type:uuid"`
+	Username    string    `gorm:"unique;not null" json:"username"`
+	LeftClick   uint64    `gorm:"default:0" json:"leftClick"`
+	RightClick  uint64    `gorm:"default:0" json:"rightClick"`
+	MouseTravel uint64    `gorm:"default:0" json:"mouseTravel"`
+}
+
+func (mouse *Mouse) BeforeCreate(tx *gorm.DB) (err error) {
+	mouse.ID = uuid.New()
+	return
 }
