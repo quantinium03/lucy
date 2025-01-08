@@ -40,7 +40,7 @@ func CreateMouseStats(c *fiber.Ctx) error {
 		Password    string `json:"password"`
 		RightClick  uint64 `json:"rightClick"`
 		LeftClick   uint64 `json:"leftClick"`
-		MouseTravel uint64 `json:"mouseTravel"`
+		MouseTravel float64`json:"mouseTravel"`
 	}
 
 	var authReq AuthMouseReq

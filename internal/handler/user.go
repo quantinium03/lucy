@@ -71,7 +71,7 @@ func GetSingleUser(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(400).JSON(fiber.Map{
+	return c.Status(200).JSON(fiber.Map{
 		"status":  "success",
 		"message": "user found",
 		"data":    user,

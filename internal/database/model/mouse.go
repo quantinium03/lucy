@@ -11,7 +11,7 @@ type Mouse struct {
 	Username    string    `gorm:"unique;not null" json:"username"`
 	LeftClick   uint64    `gorm:"default:0" json:"leftClick"`
 	RightClick  uint64    `gorm:"default:0" json:"rightClick"`
-	MouseTravel uint64    `gorm:"default:0" json:"mouseTravel"`
+	MouseTravel float64   `gorm:"default:0" json:"mouseTravel"`
 }
 
 func (mouse *Mouse) BeforeCreate(tx *gorm.DB) (err error) {
