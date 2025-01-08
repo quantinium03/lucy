@@ -37,10 +37,10 @@ func CreateMouseStats(c *fiber.Ctx) error {
 	}
 
 	type AuthMouseReq struct {
-		Password    string `json:"password"`
-		RightClick  uint64 `json:"rightClick"`
-		LeftClick   uint64 `json:"leftClick"`
-		MouseTravel float64`json:"mouseTravel"`
+		Password    string  `json:"password"`
+		RightClick  uint64  `json:"rightClick"`
+		LeftClick   uint64  `json:"leftClick"`
+		MouseTravel float64 `json:"mouseTravel"`
 	}
 
 	var authReq AuthMouseReq
@@ -141,10 +141,10 @@ func UpdateMouseStats(c *fiber.Ctx) error {
 	}
 
 	type AuthMouseReq struct {
-		Password    string `json:"password"`
-		LeftClick   uint64 `json:"leftClick"`
-		RightClick  uint64 `json:"rightClick"`
-		MouseTravel uint64 `json:"mouseTravel"`
+		Password    string  `json:"password"`
+		LeftClick   uint64  `json:"leftClick"`
+		RightClick  uint64  `json:"rightClick"`
+		MouseTravel float64 `json:"mouseTravel"`
 	}
 
 	var authReq AuthMouseReq
