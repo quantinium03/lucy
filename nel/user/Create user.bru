@@ -1,0 +1,19 @@
+meta {
+  name: Create user
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://{{server}}:5000/api/v1/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username":"quantinium",
+    "quantinium":"quant@quantinium.dev",
+    "password":"123456789"
+  }
+}

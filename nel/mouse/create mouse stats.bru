@@ -1,0 +1,20 @@
+meta {
+  name: create mouse stats
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://{{server}}:5000/api/v1/mouse/45d18429-abaa-45b9-8ef9-a38c53c59376
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "password":"123456789",
+    "rightClick": 20,
+    "leftClick": 10,
+    "mouseTravel": 1.2
+  }
+}

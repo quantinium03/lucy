@@ -1,0 +1,18 @@
+meta {
+  name: update keyboard stats
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://{{server}}:5000/api/v1/keyboard/45d18429-abaa-45b9-8ef9-a38c53c59376
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "password":"123456789",
+    "keypress": 10
+  }
+}
