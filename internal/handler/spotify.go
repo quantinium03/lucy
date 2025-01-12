@@ -57,7 +57,7 @@ func GetCurrentlyPlaying(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{
 		"status":  "success",
 		"message": "Successfully fetched the spotify data",
-		"data":    nil,
+		"data":    spotify,
 	})
 }
 
