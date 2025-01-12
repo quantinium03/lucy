@@ -45,7 +45,7 @@ var API_KEY = config.Config("LAST_FM_API_KEY")
 var LASTFM_URL = "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=Quantinium_X&api_key="+ API_KEY +"&limit=1&format=json"
 
 func FetchSpotifyData() {
-	ticker := time.NewTicker(30 * time.Second)
+	ticker := time.NewTicker(4 * time.Minute)
 	defer ticker.Stop()
 	db := database.DB.DB
 	for {
