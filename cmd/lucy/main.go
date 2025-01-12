@@ -9,6 +9,7 @@ import (
 	"github.com/quantinium03/lucy/internal/config"
 	"github.com/quantinium03/lucy/internal/database"
 	"github.com/quantinium03/lucy/internal/route"
+	"github.com/quantinium03/lucy/internal/util"
 )
 
 func main() {
@@ -16,6 +17,9 @@ func main() {
 	app := fiber.New()
 	app.Use(logger.New())
 	app.Use(cors.New())
+
+	go util.FetchSpotifyData()
+	go util.GetAccessToken()
 
 	route.SetupRoutes(app)
 

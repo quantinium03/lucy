@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/quantinium03/lucy/internal/config"
 	"github.com/quantinium03/lucy/internal/database/model"
@@ -46,9 +47,25 @@ func ConnectDB() {
 	log.Println("Connected")
 	db.Logger = logger.Default.LogMode(logger.Info)
 	log.Println("Running migrations")
-	db.AutoMigrate(&model.User{}, &model.Keyboard{}, &model.Mouse{})
+	db.AutoMigrate(&model.User{}, &model.Keyboard{}, &model.Mouse{}, &model.Spotify{})
+	createTupleInSpotifyTable(db)
 
 	DB = DbInstance{
 		DB: db,
 	}
+}
+
+func createTupleInSpotifyTable(db *gorm.DB) {
+    var spotify model.Spotify
+    spotify.Username = "quantinium"
+
+    if err := db.Create(&spotify).Error; err != nil {
+        if strings.Contains(err.Error(), "duplicate key value") || strings.Contains(err.Error(), "UNIQUE constraint failed") {
+            fmt.Println("Duplicate entry detected. Skipping insert.")
+        } else {
+            fmt.Printf("Error inserting record into Spotify table: %v\n", err)
+        }
+    } else {
+        fmt.Println("Spotify record created successfully.")
+    }
 }

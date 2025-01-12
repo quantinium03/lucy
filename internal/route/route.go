@@ -20,4 +20,7 @@ func SetupRoutes(app *fiber.App) {
 	v1.Post("/mouse/:id", handler.CreateMouseStats)
 	v1.Get("/mouse/:id", handler.GetMouseStats)
 	v1.Put("/mouse/:id", handler.UpdateMouseStats)
+
+	v1.Get("/spotify/:id", handler.GetCurrentlyPlaying)
+	v1.Post("/spotify/:id", handler.CreateSpotifyStats)
 }
