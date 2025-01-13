@@ -5,7 +5,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/quantinium03/lucy/internal/database"
 	"github.com/quantinium03/lucy/internal/database/model"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func GetCurrentlyPlaying(c *fiber.Ctx) error {
