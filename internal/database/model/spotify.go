@@ -11,7 +11,7 @@ type Spotify struct {
 	Username              string    `gorm:"unique;not null" json:"username"`
 	SpotifyTrackEmbedURI  string    `gorm:"unique" json:"spotifyTrackEmbedUri"`
 	SpotifyTrackEmbedHtml string    `gorm:"unique" json:"spotifyTrackEmbedHtml"`
-	SpotifyAccessToken    string    `gorm:"unique" json:"SpotifyAccessToken"`
+	SpotifyAccessToken    string    `gorm:"unique" json:"-"`
 }
 
 func (spotify *Spotify) BeforeCreate(tx *gorm.DB) (err error) {
